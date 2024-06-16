@@ -1,0 +1,48 @@
+//停车
+case 's': 
+        flag = 's'; //状态反馈
+        Keep_Angle = Balnce_Angle_raw; //保持角度回到机械平衡角度
+        z_turn_spd = 0; //z轴转向角速度归零
+        break; 
+
+
+//前进
+case 'a':
+        flag = 'a';
+        Keep_Angle = Balnce_Angle_raw + ENERGY; //保持角度=机械平衡角度+倾角
+        z_turn_spd = 0;
+        break; 
+
+
+//后退
+case 'b': 
+        flag = 'b';
+        Keep_Angle = Balnce_Angle_raw - ENERGY; //保持角度=机械平衡角度-倾角
+        z_turn_spd = 0;
+        break; 
+
+
+case 'l': flag = 'l'; z_turn_spd = 60; break; //左转
+case 'r': flag = 'r'; z_turn_spd = -60; break; //右转
+
+
+//调节物理平衡点
+    case 'u': Keep_Angle += 0.1; break; //u前倾
+    case 'd': Keep_Angle -= 0.1; break; //d后仰
+
+
+//==直立环调试==
+    case '0': if( kp > 0 ){ kp-=1; }else{ kp=0; } break;
+    case '1': kp+=1; break; //直立环比例项
+
+//直立环积分项
+    case '2': if( ki > 0 ){ ki-=1; }else{ ki=0; } break;
+    case '3': ki+=1; break;
+
+//直立环微分项
+    case '4': kd-=1;
+    case '5': kd+1;
+
+//转向环比例项，取值范围由限定范围确定
+    case '6': angle_kp-=0.2; break;
+    case '7': angle_kp+=0.2; break; 
